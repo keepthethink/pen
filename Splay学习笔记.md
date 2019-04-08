@@ -11,15 +11,15 @@ tags: 数据结构
 
 ## 节点
 
-node.v：节点node的值
+`node.v`：节点node的值
 
-node.father：节点node的父节点
+`node.father`：节点node的父节点
 
-node.ch[0]与node.ch[1]：节点node的左子节点与右子节点
+`node.ch[0]`与`node.ch[1]`：节点node的左子节点与右子节点
 
-node.size：以节点node为根节点的子树的节点总数
+`node.size`：以节点node为根节点的子树的节点总数
 
-node.cnt：数值与节点node相同的节点的数量（都储存在节点node中）
+`node.cnt`：数值与节点node相同的节点的数量（都储存在节点node中）
 
 代码：
 ```cpp
@@ -35,9 +35,9 @@ public:
 
 ## 树
 
-root：根节点
+`root`：根节点
 
-cnt：总结点数
+`cnt`：总结点数
 
 ```cpp
 Node node[MAXN];
@@ -50,7 +50,7 @@ int root = 0, cnt = 0;
 
 ### pushup
 
-pushup()函数：**更新**节点p的size值
+`pushup()`函数：**更新**节点p的`size`值
 
 ```cpp
 void pushup(int p) {
@@ -61,7 +61,7 @@ void pushup(int p) {
 
 ### check
 
-check()函数：询问节点p是其父节点的左子节点还是右子节点
+`check()`函数：询问节点p是其父节点的左子节点还是右子节点
 
 ```cpp
 int check(int p) {
@@ -72,7 +72,7 @@ int check(int p) {
 
 ### connect
 
-connect()函数：将节点x连接为节点f的子节点，方向为d (d = 0, 1，同上)
+`connect()`函数：将节点x连接为节点f的子节点，方向为d (d = 0, 1，同上)
 
 ```cpp
 void connect(int x, int f, int d) {
@@ -124,7 +124,7 @@ void rotate(int x) {
 
 ### splay
 
-Splay操作：将节点x旋转到节点dist的子节点。通常是将该节点旋转到根节点，在这种情况下，应当将root置为x
+Splay操作：将节点x旋转到节点dist的子节点。通常是将该节点旋转到根节点，在这种情况下，应当将`root`置为x
 
 最朴素的想法：只要父节点不是dist就一直旋转该节点，但这样很容易被某些机（wu）智（liang）出题人卡。
 
@@ -139,7 +139,7 @@ void splay(int x, int dist = 0) {
 }
 ```
 
-所以，在实际操作中，通常会预判节点x的父节点的方向，若方向一致则旋转其父节点，减少被卡的可能性。~~多么妖娆~~
+所以，在实际操作中，通常会预判节点x的父节点的方向，若方向一致则旋转其父节点，减少被卡的可能性。
 
 ```cpp
 void splay(int x, int dist = 0) {
@@ -162,9 +162,9 @@ void splay(int x, int dist = 0) {
 
 ### find
 
-查找值为x的节点，找到后将其置为root以便操作。
+查找值为x的节点，找到后将其置为`root`以便操作。
 
-find操作的意义在于将值为x的节点伸展（splay）到根，在不存在值为x的节点的情况下，应将小于x的节点中最大的节点伸展（splay）到根。
+`find`操作的意义在于将值为x的节点伸展（splay）到根，在不存在值为x的节点的情况下，应将小于x的节点中最大的节点伸展（splay）到根。
 
 ```cpp
 void find(int x) {
@@ -178,11 +178,11 @@ void find(int x) {
 
 ## 公共操作
 
-如果将本文讲的Splay打包成一个class，则前文所述的操作应包含在private中，本节所述的操作应包含在public中。
+如果将本文讲的Splay打包成一个`class`，则前文所述的操作应包含在`private`中，本节所述的操作应包含在`public`中。
 
 ### insert
 
-Splay中的insert其实与朴素BST中的insert没有什么区别，但若直接插入可能导致树退化为链，所以要在末尾处调用一次splay()函数，使Splay树保持平衡。
+Splay中的`insert`其实与朴素BST中的`insert`没有什么区别，但若直接插入可能导致树退化为链，所以要在末尾处调用一次splay()函数，使Splay树保持平衡。
 
 ```cpp
 void insert(int x) {
@@ -206,7 +206,7 @@ void insert(int x) {
 
 ### serial
 
-serial操作：查询值为x的节点，在find操作的基础上，serial只需要在find过后输出左子树节点数量即可。
+`serial`操作：查询值为x的节点，在`find`操作的基础上，`serial`只需要在`find`过后输出左子树节点数量即可。
 
 ```cpp
 int serial(int x) {
@@ -257,10 +257,10 @@ int suc(int x) {
 
 删除较为复杂，分四步来完成：
 
-1. 定义last为节点的前驱，next为节点的后继。
-2. 将last节点splay到root，这时last的左子树皆小于x
-3. 将next节点splay到last的子节右点，此时next的右子树皆大于x
-4. next的左节点rm必然满足 last < rm < next，删除rm即可
+1. 定义`last`为节点的前驱，`next`为节点的后继。
+2. 将`last`节点splay到`root`，这时`last`的左子树皆小于x
+3. 将`next`节点splay到`last`的子节右点，此时`next`的右子树皆大于x
+4. `next`的左节点`rm`必然满足 `last` < rm < `next`，删除`rm`即可
 
 ```cpp
 void remove(int x) {
